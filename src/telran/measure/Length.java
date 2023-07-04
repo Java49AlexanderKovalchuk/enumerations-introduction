@@ -1,10 +1,6 @@
 package telran.measure;
-import java.util.Comparator;
 
-import telran.measure.LengthUnit;
-
-public class Length implements Comparable<Length>{
-	
+public class Length implements Comparable<Length> {
 	private float amount;
 	private LengthUnit lenghtUnit;
  	public Length(float amount, LengthUnit lengthUnit){
@@ -13,26 +9,39 @@ public class Length implements Comparable<Length>{
  	}
 	
   	public String  toString() {
- 		String unit = this.lenghtUnit.toString();
- 		String amount = String.valueOf(this.amount);
- 		return String.format("%s%s", amount, unit);
- 	}
+ 		return Float.toString(amount) + lenghtUnit.toString();
+ 	} 
  	
- 	public Length convert(LengthUnit lengthUnit) {
- 		return new Length(this.amount * this.lenghtUnit.value /
- 				lengthUnit.value, lengthUnit);
+ 	public Length convert(LengthUnit length) {
+ 		return new Length(amount * lenghtUnit.value /
+ 				length.getValue(), length);
  	}
-
-	@Override 
-	public void compareTo() {
-		// TODO Auto-generated method stub
-		//Comparable<Length> comp = Comparator.
-		
-		
+ 	@Override
+	public boolean equals(Object obj) {
+		if(this == obj) {
+			return true;
+		}
+		if(obj == null || getClass() != obj.getClass()) {
+			return false;
+		}
+		Length objLength = convertTo((Length)obj);
+		return Float.compare(amount, objLength.amount) == 0;
 	}
 	
+ 	@Override
+	public int compareTo(Length obj) {
+		int res = 0; 
+		if(!equals(obj)) {
+		Length objLength = convertTo(obj);
+		res = Float.compare(amount, objLength.amount);
+		
+		}
+		return res;
+	}
 	
-
+	private  Length convertTo(Length obj) {
+		return ((Length) obj).convert(lenghtUnit);
+	}
 	public LengthUnit getUnit() {
 		return this.lenghtUnit;
 	}
@@ -40,4 +49,5 @@ public class Length implements Comparable<Length>{
 	public float getAmount() {
 		return this.amount;
 	}
+
 }
