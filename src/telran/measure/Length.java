@@ -30,13 +30,8 @@ public class Length implements Comparable<Length> {
 	
  	@Override
 	public int compareTo(Length obj) {
-		int res = 0; 
-		if(!equals(obj)) {
 		Length objLength = convertTo(obj);
-		res = Float.compare(amount, objLength.amount);
-		
-		}
-		return res;
+		return Float.compare(amount, objLength.amount);
 	}
 	
 	private  Length convertTo(Length obj) {
