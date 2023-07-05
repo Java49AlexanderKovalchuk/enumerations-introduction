@@ -10,10 +10,10 @@ public enum LengthUnit {
 		return value;
 	}
 	
-	public Length between(Length length1, Length length2) {
-		Length lengthConvert = length2.convert(length1.getUnit()); 
-		float delta = lengthConvert.getAmount() - length1.getAmount();
-		return new Length(delta, lengthConvert.getUnit());
+	public Length between(Length l1, Length l2) {
+		Length length1 = l1.convert(this); 
+		Length length2 = l2.convert(this);
+		return new Length(length2.getAmount() - length1.getAmount(), this);
 	}
 }
  
